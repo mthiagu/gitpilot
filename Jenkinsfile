@@ -1,25 +1,91 @@
+@Library(['github.com/shared-library']) _
+
 pipeline {
-  agent any
+  agent { label 'labelname' }
+
+  options {
+    timeout(time: 60, unit: 'MINUTES')
+    timestamps()
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+
   stages {
-    stage('error') {
-      parallel {
-        stage('Start Build') {
-          steps {
-            echo 'Starting Build'
-          }
-        }
 
-        stage('Build') {
-          steps {
-            bat 'REM "Test Run" echo "Hello World" '
-          }
-        }
-
+    stage('Clean Workspace') {
+      steps {
+        // Clean the workspace
       }
     }
 
+    stage('Checkout') {
+      steps {
+        // clone your project from Git/SVN etc
+      }
+    }
+
+    stage('Build') {
+      steps {
+        // build, build stages can be made in parallel aswell
+        // build stage can call other stages
+        // can trigger other jenkins pipelines and copy artifact from that pipeline
+      }
+    }
+
+    stage('Test') {
+      steps {
+        // Test (Unit test / Automation test(Selenium/Robot framework) / etc.)
+      }
+    }
+
+    stage('Code Analysis') {
+      steps {
+        // Static Code analysis (Coverity/ SonarQube /openvas/Nessus etc.)
+      }
+    }
+
+    stage('Generate Release Notes') {
+      steps {
+        // Release note generation .
+      }
+    }
+
+    stage('Tagging') {
+      steps {
+        // Tagging specific version number
+      }
+    }
+
+    stage('Release') {
+      steps {
+        // release specific versions(Snapshot / release / etc.)
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        // Deploy to cloud providers /local drives /artifactory etc.
+        // Deploy to Deploy/prod /test/ etc
+      }
+    }
   }
-  environment {
-    EMP_NAME = 'Thiagu'
+
+  post {
+    success {
+      echo "SUCCESS"
+    }
+    failure {
+      echo "FAILURE"
+    }
+    changed {
+      echo "Status Changed: [From: $currentBuild.previousBuild.result, To: $currentBuild.result]"
+    }
+    always {
+      script {
+        def result = currentBuild.result
+        if (result == null) {
+          result = "SUCCESS"
+        }
+      }
+    }
   }
 }
