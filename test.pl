@@ -1,5 +1,5 @@
 #Sample program for testing Git
-
+#ADD MORE COMMENTS AND DESCRIPTION FOR BETTER READABILITY
 
 use warnings;
 use strict;
