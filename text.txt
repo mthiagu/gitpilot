@@ -11,3 +11,4 @@ Changes of opt
 one
 two
 three
+Adding new change for testing amending after pushing changes to git
