@@ -12,4 +12,4 @@ one
 two
 three
 Adding new change for testing amending after pushing changes to git
-Change to try addressing issues
+Change to try addressing issues and close them
