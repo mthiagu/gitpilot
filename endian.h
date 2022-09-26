@@ -9,7 +9,6 @@
 
 #ifndef OSSL_INTERNAL_ENDIAN_H
 # define OSSL_INTERNAL_ENDIAN_H
-#define DECLARE_IS_ENDIAN
 # pragma once
 
 /*
@@ -44,6 +43,9 @@
         long one; \
         char little; \
     } ossl_is_endian = { 1 }
+#  define IS_LITTLE_ENDIAN (ossl_is_endian.little != 0)
+#  define IS_BIG_ENDIAN    (ossl_is_endian.little == 0)
+
 # endif
 
 #endif
